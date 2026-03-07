@@ -1,24 +1,26 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// --- REPLACE WITH YOUR SUPABASE URL AND ANON KEY ---
+// Injected User API Keys
 const SUPABASE_URL = 'https://zxzlemixeecxyymydwsn.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4emxlbWl4ZWVjeHl5bXlkd3NuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MDAzODksImV4cCI6MjA4ODQ3NjM4OX0.ivIdCQEejXTDgtDqCM7zJHeTHg-uRqSRmKfBHD7Ft9U';
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-console.log("Developed by MYR");
+console.log("God-Tier UI Initialized. Crafted by MYR.");
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Top Navbar Reveal
+    initPremiumSnowfall();
+
+    // Mobile-Safe Navbar Scroll Logic
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
+        if (window.scrollY > 30) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
     });
 
-    // Fetch Data
+    // Fetch Supabase Data
     const { data: ads, error } = await supabase
         .from('advertisements')
         .select('*')
@@ -42,12 +44,14 @@ function renderUI(ads) {
     let cardsHTML = '';
 
     ads.forEach((ad, index) => {
-        const imageSrc = ad.banner_image_url || 'https://via.placeholder.com/650x500/0A0A0A/FFFFFF?text=Premium';
+        const imageSrc = ad.banner_image_url || 'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=800';
+        
         const slideHtml = `
             <div class="slide" data-index="${index}">
                 <div class="slide-content">
+                    <span class="slide-eyebrow">Slot 0${index + 1}</span>
                     <h2>${ad.banner_heading || 'Elite Marketing'}</h2>
-                    <p>${ad.banner_text || 'Premium placement for visionary brands.'}</p>
+                    <p>${ad.banner_text || 'Premium placement designed exclusively for visionary brands aiming to dominate the market.'}</p>
                 </div>
                 <div class="slide-visual">
                     <div class="img-wrapper">
@@ -58,21 +62,21 @@ function renderUI(ads) {
         `;
         carouselHTML += slideHtml;
 
-        const logoSrc = ad.sponsor_logo_url || 'https://via.placeholder.com/180/0A0A0A/FFFFFF?text=Brand';
+        const logoSrc = ad.sponsor_logo_url || 'https://via.placeholder.com/160/0A0A0A/FFFFFF?text=Brand';
         sponsorsHTML += `<img src="${logoSrc}" class="sponsor-logo" alt="${ad.bio_name}">`;
 
         const iconClass = getSocialIcon(ad.social_platform);
         const buttonHTML = ad.product_link 
-            ? `<a href="${ad.product_link}" target="_blank" class="btn">View Product</a>`
-            : `<a href="#" class="btn disabled">Unavailable</a>`;
+            ? `<a href="${ad.product_link}" target="_blank" class="btn">Explore Platform</a>`
+            : `<a href="#" class="btn disabled">Currently Unavailable</a>`;
 
         cardsHTML += `
             <div class="card">
                 <div class="card-header">
                     <h3>${ad.bio_name || 'Premium Brand'}</h3>
-                    <h4>Featured Leader</h4>
+                    <h4>Verified Partner</h4>
                 </div>
-                <p>"${ad.card_subtext || 'Uncompromising excellence in the marketing space.'}"</p>
+                <p>"${ad.card_subtext || 'Uncompromising excellence in the digital marketing space. Connect with high-value audiences today.'}"</p>
                 <div class="card-footer">
                     <a href="${ad.social_link || '#'}" target="_blank" class="social-icon"><i class="${iconClass}"></i></a>
                     ${buttonHTML}
@@ -81,17 +85,19 @@ function renderUI(ads) {
         `;
     });
 
-    // SEAMLESS LOOP LOGIC: Clone the first slide and append it to the end
+    // SEAMLESS LOOP LOGIC: Clone First Slide
     if(ads.length > 0) {
+        const cloneImageSrc = ads[0].banner_image_url || 'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=800';
         const firstSlideHTML = `
             <div class="slide clone">
                 <div class="slide-content">
+                     <span class="slide-eyebrow">Slot 01</span>
                     <h2>${ads[0].banner_heading || 'Elite Marketing'}</h2>
-                    <p>${ads[0].banner_text || 'Premium placement for visionary brands.'}</p>
+                    <p>${ads[0].banner_text || 'Premium placement designed exclusively for visionary brands aiming to dominate the market.'}</p>
                 </div>
                 <div class="slide-visual">
                     <div class="img-wrapper">
-                        <img src="${ads[0].banner_image_url || 'https://via.placeholder.com/650x500/0A0A0A/FFFFFF?text=Premium'}" alt="Brand Imagery">
+                        <img src="${cloneImageSrc}" alt="Brand Imagery">
                     </div>
                 </div>
             </div>
@@ -120,8 +126,7 @@ function initSeamlessCarousel(realSlideCount) {
     const scrollIndicator = document.getElementById('scroll-indicator');
     let currentIndex = 0;
     
-    // Smooth cinematic transition variable
-    const transitionStyle = 'transform 1s cubic-bezier(0.85, 0, 0.15, 1)';
+    const transitionStyle = 'transform 1.2s cubic-bezier(0.85, 0, 0.15, 1)';
 
     setTimeout(() => {
         setInterval(() => {
@@ -129,26 +134,21 @@ function initSeamlessCarousel(realSlideCount) {
             track.style.transition = transitionStyle;
             track.style.transform = `translateX(-${currentIndex * 100}vw)`;
             
-            // Show scroll indicator after first slide moves
-            if (currentIndex === 1) {
-                scrollIndicator.classList.remove('hidden');
-            }
+            if (currentIndex === 1) scrollIndicator.classList.remove('hidden');
 
-            // If we reached the clone (which is at index = realSlideCount)
+            // Reset loop
             if (currentIndex === realSlideCount) {
-                // Wait for the slide transition to finish (1000ms)
                 setTimeout(() => {
-                    // Instantly snap back to the REAL first slide without animation
                     track.style.transition = 'none';
                     currentIndex = 0;
                     track.style.transform = `translateX(0vw)`;
-                }, 1000); 
+                }, 1200); 
             }
-        }, 4000); 
+        }, 5000); 
     }, 1500);
 }
 
-// Cinematic Scroll Reveals with Staggering
+// Cinematic Scroll Reveals
 function initScrollReveal() {
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -158,7 +158,66 @@ function initScrollReveal() {
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+    }, { threshold: 0.1, rootMargin: "0px 0px -20px 0px" });
 
     reveals.forEach(reveal => observer.observe(reveal));
+}
+
+// ==========================================
+// PREMIUM AMBIENT SNOWFALL / DUST ENGINE
+// ==========================================
+function initPremiumSnowfall() {
+    const canvas = document.getElementById('snowfall');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.radius = Math.random() * 1.5 + 0.5; // Tiny, elegant specs
+            this.speedY = Math.random() * 0.5 + 0.1; // Slow falling
+            this.speedX = (Math.random() - 0.5) * 0.3; // Gentle drift
+            this.opacity = Math.random() * 0.5 + 0.1;
+        }
+        update() {
+            this.y += this.speedY;
+            this.x += this.speedX;
+            // Wrap around screen
+            if (this.y > height) this.y = 0;
+            if (this.x > width) this.x = 0;
+            if (this.x < 0) this.x = width;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(10, 10, 10, ${this.opacity})`; // Dark dust for light theme
+            ctx.fill();
+        }
+    }
+
+    // Create 75 particles for a subtle, non-distracting effect
+    for (let i = 0; i < 75; i++) {
+        particles.push(new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
 }
