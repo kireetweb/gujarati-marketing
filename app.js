@@ -8,17 +8,17 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 console.log("Developed by MYR");
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Elegant Navbar Reveal on Scroll
+    // Top Navbar Reveal
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 80) {
+        if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
     });
 
-    // 2. Fetch Data (The skeletons are showing while this happens)
+    // Fetch Data
     const { data: ads, error } = await supabase
         .from('advertisements')
         .select('*')
@@ -29,15 +29,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // Small timeout purely to ensure the beautiful skeleton is seen for a split second 
-    // even if internet is extremely fast (optional, but feels premium)
-    setTimeout(() => {
-        renderUI(ads);
-    }, 800);
+    renderUI(ads);
 });
 
 function renderUI(ads) {
-    const carousel = document.getElementById('carousel');
+    const track = document.getElementById('carousel-track');
     const sponsorsContainer = document.getElementById('sponsor-container');
     const cardsContainer = document.getElementById('cards-container');
 
@@ -45,38 +41,38 @@ function renderUI(ads) {
     let sponsorsHTML = '';
     let cardsHTML = '';
 
-    ads.forEach((ad) => {
-        // Build Slides
-        const imageSrc = ad.banner_image_url || 'https://via.placeholder.com/600x500?text=Premium+Slot';
-        carouselHTML += `
-            <div class="slide">
-                <div class="slide-text">
-                    <h2>${ad.banner_heading || 'Elevate Your Reach'}</h2>
-                    <p>${ad.banner_text || 'Secure this premium placement to showcase your brand to thousands of daily visitors.'}</p>
+    ads.forEach((ad, index) => {
+        const imageSrc = ad.banner_image_url || 'https://via.placeholder.com/650x500/0A0A0A/FFFFFF?text=Premium';
+        const slideHtml = `
+            <div class="slide" data-index="${index}">
+                <div class="slide-content">
+                    <h2>${ad.banner_heading || 'Elite Marketing'}</h2>
+                    <p>${ad.banner_text || 'Premium placement for visionary brands.'}</p>
                 </div>
-                <div class="slide-image">
-                    <img src="${imageSrc}" alt="Brand Imagery">
+                <div class="slide-visual">
+                    <div class="img-wrapper">
+                        <img src="${imageSrc}" alt="Brand Imagery">
+                    </div>
                 </div>
             </div>
         `;
+        carouselHTML += slideHtml;
 
-        // Build Sponsors
-        const logoSrc = ad.sponsor_logo_url || 'https://via.placeholder.com/160?text=Logo';
-        sponsorsHTML += `<img src="${logoSrc}" class="sponsor-logo" alt="${ad.bio_name || 'Sponsor'}">`;
+        const logoSrc = ad.sponsor_logo_url || 'https://via.placeholder.com/180/0A0A0A/FFFFFF?text=Brand';
+        sponsorsHTML += `<img src="${logoSrc}" class="sponsor-logo" alt="${ad.bio_name}">`;
 
-        // Build Cards
         const iconClass = getSocialIcon(ad.social_platform);
         const buttonHTML = ad.product_link 
             ? `<a href="${ad.product_link}" target="_blank" class="btn">View Product</a>`
-            : `<a href="#" class="btn disabled">Coming Soon</a>`;
+            : `<a href="#" class="btn disabled">Unavailable</a>`;
 
         cardsHTML += `
             <div class="card">
                 <div class="card-header">
                     <h3>${ad.bio_name || 'Premium Brand'}</h3>
-                    <h4>Featured Partner</h4>
+                    <h4>Featured Leader</h4>
                 </div>
-                <p>"${ad.card_subtext || 'We partner with industry leaders to bring you the best in the business.'}"</p>
+                <p>"${ad.card_subtext || 'Uncompromising excellence in the marketing space.'}"</p>
                 <div class="card-footer">
                     <a href="${ad.social_link || '#'}" target="_blank" class="social-icon"><i class="${iconClass}"></i></a>
                     ${buttonHTML}
@@ -85,13 +81,29 @@ function renderUI(ads) {
         `;
     });
 
-    // Replace Skeletons with Real Data
-    carousel.innerHTML = carouselHTML;
+    // SEAMLESS LOOP LOGIC: Clone the first slide and append it to the end
+    if(ads.length > 0) {
+        const firstSlideHTML = `
+            <div class="slide clone">
+                <div class="slide-content">
+                    <h2>${ads[0].banner_heading || 'Elite Marketing'}</h2>
+                    <p>${ads[0].banner_text || 'Premium placement for visionary brands.'}</p>
+                </div>
+                <div class="slide-visual">
+                    <div class="img-wrapper">
+                        <img src="${ads[0].banner_image_url || 'https://via.placeholder.com/650x500/0A0A0A/FFFFFF?text=Premium'}" alt="Brand Imagery">
+                    </div>
+                </div>
+            </div>
+        `;
+        carouselHTML += firstSlideHTML;
+    }
+
+    track.innerHTML = carouselHTML;
     sponsorsContainer.innerHTML = sponsorsHTML;
     cardsContainer.innerHTML = cardsHTML;
 
-    // Initialize Interactions
-    initCarousel(ads.length);
+    initSeamlessCarousel(ads.length);
     initScrollReveal();
 }
 
@@ -102,44 +114,51 @@ function getSocialIcon(platform) {
     return 'fa-solid fa-arrow-up-right-from-square';
 }
 
-// 3. Silky Smooth Carousel Logic
-function initCarousel(totalSlides) {
-    const carousel = document.getElementById('carousel');
+// True Seamless Continuous Infinite Loop
+function initSeamlessCarousel(realSlideCount) {
+    const track = document.getElementById('carousel-track');
     const scrollIndicator = document.getElementById('scroll-indicator');
     let currentIndex = 0;
-    let cycleCount = 0;
+    
+    // Smooth cinematic transition variable
+    const transitionStyle = 'transform 1s cubic-bezier(0.85, 0, 0.15, 1)';
 
-    // Wait a brief moment before starting the auto-scroll
     setTimeout(() => {
         setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            carousel.style.transform = `translateX(-${currentIndex * 100}vw)`;
+            currentIndex++;
+            track.style.transition = transitionStyle;
+            track.style.transform = `translateX(-${currentIndex * 100}vw)`;
             
-            if (currentIndex === totalSlides - 1) cycleCount++;
-            
-            // Show scroll indicator after 1 full cycle
-            if (cycleCount >= 1) {
+            // Show scroll indicator after first slide moves
+            if (currentIndex === 1) {
                 scrollIndicator.classList.remove('hidden');
             }
-        }, 4000); // Increased to 4s so users can read the elegant text
-    }, 2000);
+
+            // If we reached the clone (which is at index = realSlideCount)
+            if (currentIndex === realSlideCount) {
+                // Wait for the slide transition to finish (1000ms)
+                setTimeout(() => {
+                    // Instantly snap back to the REAL first slide without animation
+                    track.style.transition = 'none';
+                    currentIndex = 0;
+                    track.style.transform = `translateX(0vw)`;
+                }, 1000); 
+            }
+        }, 4000); 
+    }, 1500);
 }
 
-// 4. Intersection Observer for Cinematic Scroll Reveals
+// Cinematic Scroll Reveals with Staggering
 function initScrollReveal() {
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                // Optional: Unobserve after reveal so it stays visible
                 observer.unobserve(entry.target);
             }
         });
-    }, { 
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
-    });
+    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
     reveals.forEach(reveal => observer.observe(reveal));
 }
