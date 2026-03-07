@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gujarati Marketing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div id="toast" class="toast"></div>
+
+    <div id="login-screen" class="glass-panel">
+        <h2>Admin Login</h2>
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Email ID" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="dashboard" class="hidden">
+        <div class="dashboard-header glass-panel">
+            <h2>Gujarati Marketing Publisher</h2>
+            <button id="logout-btn">Logout</button>
+        </div>
+
+        <div class="glass-panel form-container">
+            <h3>Update Advertisements</h3>
+            
+            <label>Select Slot to Update:</label>
+            <select id="slot-select">
+                <option value="1">Slot 1</option>
+                <option value="2">Slot 2</option>
+                <option value="3">Slot 3</option>
+            </select>
+            <hr>
+
+            <form id="update-form">
+                <div class="form-group">
+                    <label>Banner Heading</label>
+                    <input type="text" id="banner_heading">
+                </div>
+                <div class="form-group">
+                    <label>Banner Text (Max 60 words)</label>
+                    <textarea id="banner_text" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Banner Image (.jpg, .png, .svg)</label>
+                    <input type="file" id="banner_image" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label>Sponsor Logo (1:1 Ratio)</label>
+                    <input type="file" id="sponsor_logo" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label>Bio Profile / Brand Name</label>
+                    <input type="text" id="bio_name">
+                </div>
+                <div class="form-group">
+                    <label>Card Subtext (Max 100 words)</label>
+                    <textarea id="card_subtext" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Social Media Platform</label>
+                    <select id="social_platform">
+                        <option value="IG">Instagram</option>
+                        <option value="YT">YouTube</option>
+                        <option value="X">X (Twitter)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Social Link URL</label>
+                    <input type="url" id="social_link">
+                </div>
+                <div class="form-group">
+                    <label>Product Link URL (Optional)</label>
+                    <input type="url" id="product_link">
+                </div>
+                <button type="submit" id="save-btn">Publish Updates</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>
