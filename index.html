@@ -3,42 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gujarati Marketing | Premium Reach</title>
+    <title>Gujarati Marketing | Elite Reach</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="ambient-blur blur-saffron"></div>
-    <div class="ambient-blur blur-green"></div>
+    <div class="bg-gradient-base"></div>
+    <div class="ambient-glow glow-saffron"></div>
+    <div class="ambient-glow glow-green"></div>
 
-    <nav id="navbar" class="glass-pill-nav">
+    <nav id="navbar" class="glass-bar-nav">
         <h1 class="logo-text">Gujarati Marketing</h1>
     </nav>
 
     <header id="hero">
-        <div class="carousel-container" id="carousel">
-            <div class="slide">
-                <div class="slide-text">
-                    <div class="skeleton skeleton-text skeleton-title"></div>
-                    <div class="skeleton skeleton-text skeleton-body"></div>
-                    <div class="skeleton skeleton-text skeleton-body short"></div>
-                </div>
-                <div class="slide-image">
-                    <div class="skeleton skeleton-img"></div>
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="carousel-track">
+                <div class="slide">
+                    <div class="slide-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                    <div class="slide-visual">
+                        <div class="skeleton skeleton-img"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="scroll-indicator" class="hidden">
-            <span class="scroll-text">Discover Excellence</span>
-            <i class="fa-solid fa-arrow-down-long bounce"></i>
+        
+        <div id="scroll-indicator" class="scroll-wrapper hidden">
+            <span class="scroll-label">EXPLORE</span>
+            <div class="scroll-line"></div>
         </div>
     </header>
 
     <section id="sponsors" class="reveal">
-        <h2 class="section-title">Trusted by Industry Leaders</h2>
+        <div class="section-header">
+            <h2 class="section-title">Trusted by Industry Leaders</h2>
+            <p class="section-subtitle">Partnering with the top 1% of brands to deliver uncompromising marketing excellence.</p>
+        </div>
         <div class="sponsor-grid" id="sponsor-container">
             <div class="skeleton skeleton-logo"></div>
             <div class="skeleton skeleton-logo"></div>
@@ -48,26 +54,25 @@
 
     <section id="cards" class="reveal">
         <div class="cards-grid" id="cards-container">
-            <div class="card glass">
-                <div class="skeleton skeleton-text skeleton-title"></div>
-                <div class="skeleton skeleton-text skeleton-body"></div>
-                <div class="skeleton skeleton-text skeleton-body short"></div>
             </div>
-            <div class="card glass">
-                <div class="skeleton skeleton-text skeleton-title"></div>
-                <div class="skeleton skeleton-text skeleton-body"></div>
-                <div class="skeleton skeleton-text skeleton-body short"></div>
-            </div>
-            <div class="card glass">
-                <div class="skeleton skeleton-text skeleton-title"></div>
-                <div class="skeleton skeleton-text skeleton-body"></div>
-                <div class="skeleton skeleton-text skeleton-body short"></div>
-            </div>
-        </div>
     </section>
 
-    <footer class="minimal-footer">
-        <p>&copy; 2026 Gujarati Marketing. Elevating brands.</p>
+    <footer class="elite-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2 class="footer-logo">Gujarati Marketing</h2>
+                <p class="footer-desc">The premier destination for the day's top 3 marketing innovations. We bridge the gap between visionary brands and high-value audiences with uncompromising elegance.</p>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-link" target="_blank">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span>@gujaratimarketing</span>
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gujarati Marketing. All rights reserved.</p>
+        </div>
     </footer>
 
     <script type="module" src="app.js"></script>
