@@ -8,7 +8,6 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 console.log("God-Tier UI Initialized. Crafted by MYR.");
 
 document.addEventListener('DOMContentLoaded', async () => {
-    initPremiumSnowfall();
 
     // Mobile-Safe Navbar Scroll Logic
     const navbar = document.getElementById('navbar');
@@ -62,7 +61,7 @@ function renderUI(ads) {
         `;
         carouselHTML += slideHtml;
 
-        const logoSrc = ad.sponsor_logo_url || 'https://via.placeholder.com/160/0A0A0A/FFFFFF?text=Brand';
+        const logoSrc = ad.sponsor_logo_url || 'https://via.placeholder.com/160/050505/FFFFFF?text=Brand';
         sponsorsHTML += `<img src="${logoSrc}" class="sponsor-logo" alt="${ad.bio_name}">`;
 
         const iconClass = getSocialIcon(ad.social_platform);
@@ -134,7 +133,9 @@ function initSeamlessCarousel(realSlideCount) {
             track.style.transition = transitionStyle;
             track.style.transform = `translateX(-${currentIndex * 100}vw)`;
             
-            if (currentIndex === 1) scrollIndicator.classList.remove('hidden');
+            if (currentIndex === 1 && scrollIndicator) {
+                 scrollIndicator.classList.remove('hidden');
+            }
 
             // Reset loop
             if (currentIndex === realSlideCount) {
@@ -161,63 +162,4 @@ function initScrollReveal() {
     }, { threshold: 0.1, rootMargin: "0px 0px -20px 0px" });
 
     reveals.forEach(reveal => observer.observe(reveal));
-}
-
-// ==========================================
-// PREMIUM AMBIENT SNOWFALL / DUST ENGINE
-// ==========================================
-function initPremiumSnowfall() {
-    const canvas = document.getElementById('snowfall');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-
-    function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.radius = Math.random() * 1.5 + 0.5; // Tiny, elegant specs
-            this.speedY = Math.random() * 0.5 + 0.1; // Slow falling
-            this.speedX = (Math.random() - 0.5) * 0.3; // Gentle drift
-            this.opacity = Math.random() * 0.5 + 0.1;
-        }
-        update() {
-            this.y += this.speedY;
-            this.x += this.speedX;
-            // Wrap around screen
-            if (this.y > height) this.y = 0;
-            if (this.x > width) this.x = 0;
-            if (this.x < 0) this.x = width;
-        }
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(10, 10, 10, ${this.opacity})`; // Dark dust for light theme
-            ctx.fill();
-        }
-    }
-
-    // Create 75 particles for a subtle, non-distracting effect
-    for (let i = 0; i < 75; i++) {
-        particles.push(new Particle());
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-        requestAnimationFrame(animate);
-    }
-    animate();
 }
