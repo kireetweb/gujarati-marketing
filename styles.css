@@ -1,78 +1,224 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Gujarati Marketing | Air</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+:root {
+    /* Fresh, Vibrant, Non-B&W Palette */
+    --text-deep: #1E293B;       /* Deep Ocean Slate (Not Black) */
+    --text-light: #64748B;      /* Soft Slate */
+    --accent-fresh: #0EA5E9;    /* Vibrant Sky Blue */
+    --accent-warm: #F59E0B;     /* Saffron Gold */
+    --glass-pane: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --shadow-color: rgba(14, 165, 233, 0.15); /* Colored shadow, not grey */
     
-    <div class="fresh-air-bg"></div>
+    --ease-silky: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-    <nav id="navbar" class="air-nav">
-        <div class="nav-container">
-            <h1 class="logo-text">Gujarati Marketing</h1>
-        </div>
-    </nav>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <header id="hero">
-        <div class="carousel-viewport">
-            <div class="carousel-track" id="carousel-track">
-                <div class="slide">
-                    <div class="slide-content">
-                        <div class="skeleton skeleton-title"></div>
-                        <div class="skeleton skeleton-text"></div>
-                    </div>
-                    <div class="slide-visual">
-                        <div class="skeleton skeleton-img"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+body {
+    background-color: #F8FAFC;
+    color: var(--text-deep);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
 
-    <section id="sponsors" class="reveal">
-        <div class="section-header">
-            <h2 class="section-title">Global Visionaries</h2>
-            <p class="section-subtitle">Collaborating with platforms that redefine the digital horizon.</p>
-        </div>
-        <div class="sponsor-grid" id="sponsor-container">
-            <div class="skeleton skeleton-logo"></div>
-            <div class="skeleton skeleton-logo"></div>
-            <div class="skeleton skeleton-logo"></div>
-        </div>
-    </section>
+/* FRESH AIR BACKGROUND: 
+  A beautiful, subtle blend of sky blue, soft peach, and mint that stays fixed 
+*/
+.fresh-air-bg {
+    position: fixed; inset: 0; z-index: -1;
+    background: radial-gradient(circle at 15% 50%, rgba(224, 242, 254, 0.8), transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(254, 226, 226, 0.6), transparent 50%),
+                radial-gradient(circle at 50% 100%, rgba(204, 251, 241, 0.6), transparent 50%);
+    background-color: #FAFAF9;
+}
 
-    <section id="cards" class="reveal">
-        <div class="cards-grid" id="cards-container">
-            </div>
-    </section>
+/* Ultra-Thin Typography */
+h1, h2, h3, h4 { 
+    font-family: 'Outfit', sans-serif; 
+    font-weight: 200; /* RAZOR THIN */
+    color: var(--text-deep); 
+    letter-spacing: -0.03em; 
+}
 
-    <footer class="air-footer">
-        <div class="footer-container">
-            <div class="footer-brand">
-                <h2 class="footer-logo">Gujarati Marketing</h2>
-                <p class="footer-desc">Seamless connections. High-value audiences. Pure elegance.</p>
-            </div>
-            <div class="footer-social">
-                <a href="#" class="social-link" target="_blank">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="#" class="social-link" target="_blank">
-                    <i class="fa-brands fa-x-twitter"></i>
-                </a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Gujarati Marketing.</p>
-        </div>
-    </footer>
+/* =========================================
+   Cinematic Glass Nav (Center to Left)
+========================================= */
+.air-nav {
+    position: fixed; top: 0; left: 0; width: 100%; 
+    height: calc(120px + env(safe-area-inset-top)); 
+    padding-top: env(safe-area-inset-top);
+    background: transparent; z-index: 9999;
+    transition: height 0.8s var(--ease-silky), background 0.8s var(--ease-silky);
+}
 
-    <script type="module" src="app.js"></script>
-</body>
-</html>
+.air-nav.scrolled { 
+    height: calc(70px + env(safe-area-inset-top));
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.nav-container {
+    position: relative; width: 100%; height: 100%;
+    max-width: 1400px; margin: 0 auto;
+    padding: 0 clamp(1.5rem, 4vw, 3rem);
+}
+
+/* The Magic Center-to-Left Text */
+.logo-text { 
+    position: absolute; 
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(2rem, 4vw, 3rem); 
+    font-weight: 300; 
+    white-space: nowrap;
+    transition: all 0.9s var(--ease-silky);
+}
+
+.air-nav.scrolled .logo-text {
+    left: clamp(1.5rem, 4vw, 3rem);
+    transform: translate(0, -50%) scale(0.5);
+    transform-origin: left center;
+}
+
+/* =========================================
+   Borderless Hero Section
+========================================= */
+#hero {
+    min-height: 100dvh; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    padding-top: calc(80px + env(safe-area-inset-top));
+}
+
+.carousel-viewport { width: 100%; max-width: 1400px; margin: 0 auto; overflow: hidden; }
+.carousel-track { display: flex; align-items: center; }
+
+.slide {
+    min-width: 100%; 
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(1.5rem, 4vw, 3rem); 
+    gap: 4rem;
+}
+
+.slide-content { flex: 1; max-width: 550px; }
+.slide-eyebrow { 
+    font-size: 0.85rem; font-weight: 400; 
+    color: var(--accent-fresh); letter-spacing: 0.2em; text-transform: uppercase; 
+    margin-bottom: 1.5rem; display: block;
+}
+.slide-content h2 {
+    font-size: clamp(3.5rem, 6vw, 5.5rem); line-height: 1; margin-bottom: 1.5rem;
+}
+.slide-content p { 
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem); color: var(--text-light); 
+    line-height: 1.6; font-weight: 300;
+}
+
+/* Floating Image without harsh borders */
+.slide-visual { flex: 1.2; display: flex; justify-content: flex-end; width: 100%; }
+.img-wrapper {
+    width: 100%; max-width: 650px; 
+    border-radius: 30px; 
+    /* Colored shadow instead of grey block */
+    box-shadow: 0 30px 60px -15px var(--shadow-color);
+    overflow: hidden;
+}
+.img-wrapper img {
+    display: block; width: 100%; height: 60vh; min-height: 400px; max-height: 650px;
+    object-fit: cover; transition: transform 1.5s var(--ease-silky);
+}
+.slide:hover .img-wrapper img { transform: scale(1.04); }
+
+/* =========================================
+   Unboxed Open Sections
+========================================= */
+section { 
+    padding: clamp(6rem, 8vw, 10rem) clamp(1.5rem, 4vw, 3rem); 
+    max-width: 1400px; margin: 0 auto; 
+}
+.section-header { margin-bottom: 5rem; max-width: 600px; }
+.section-title { font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 1rem; }
+.section-subtitle { font-size: 1.2rem; color: var(--text-light); line-height: 1.5; font-weight: 300; }
+
+/* Borderless Sponsors */
+.sponsor-grid { display: flex; gap: 3rem; flex-wrap: wrap; align-items: center; }
+.sponsor-logo {
+    width: auto; height: 60px; max-width: 140px;
+    object-fit: contain; 
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.03));
+    transition: transform 0.4s var(--ease-silky);
+}
+.sponsor-logo:hover { transform: translateY(-5px); }
+
+/* =========================================
+   Open Cards Grid (No Boxes)
+========================================= */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 4rem; }
+.card {
+    /* NO backgrounds, NO borders. Just pure layout */
+    display: flex; flex-direction: column; gap: 1rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.1);
+    transition: transform 0.5s var(--ease-silky);
+}
+.card:hover { transform: translateY(-8px); border-bottom-color: var(--accent-fresh); }
+
+.card-header h3 { font-size: 2rem; }
+.card-header h4 { font-size: 0.8rem; color: var(--accent-warm); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 400; margin-top: 0.2rem; }
+.card p { font-size: 1.1rem; color: var(--text-light); line-height: 1.6; flex-grow: 1; }
+
+.card-footer { display: flex; align-items: center; gap: 1.5rem; margin-top: 1rem; }
+.btn {
+    padding: 0.8rem 1.8rem; border-radius: 100px; /* Pill shape for freshness */
+    background: var(--glass-pane); color: var(--text-deep); 
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    text-decoration: none; font-weight: 400; 
+    font-size: 0.9rem; letter-spacing: 0.05em;
+    transition: all 0.3s var(--ease-silky);
+}
+.btn:hover { background: var(--accent-fresh); color: #fff; border-color: transparent; box-shadow: 0 10px 20px var(--shadow-color); }
+.btn.disabled { opacity: 0.5; pointer-events: none; }
+.social-icon { font-size: 1.5rem; color: var(--text-light); transition: color 0.3s; }
+.social-icon:hover { color: var(--accent-warm); }
+
+/* =========================================
+   Airy Footer
+========================================= */
+.air-footer { padding: 5rem 0 2rem; margin-top: 4rem; }
+.footer-container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 3rem; max-width: 1400px; margin: 0 auto; padding: 0 clamp(1.5rem, 4vw, 3rem); margin-bottom: 4rem; }
+.footer-logo { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.footer-desc { color: var(--text-light); font-size: 1rem; max-width: 300px; font-weight: 300; }
+.footer-social { display: flex; gap: 1.5rem; }
+.footer-social .social-link { font-size: 1.5rem; color: var(--text-deep); transition: color 0.3s; }
+.footer-social .social-link:hover { color: var(--accent-fresh); }
+.footer-bottom { border-top: 1px solid rgba(0,0,0,0.05); color: var(--text-light); font-size: 0.85rem; max-width: 1400px; margin: 0 auto; padding: 2rem clamp(1.5rem, 4vw, 3rem) 0;}
+
+/* Skeletons */
+.skeleton { background: rgba(14, 165, 233, 0.05); border-radius: 12px; animation: pulse 1.5s infinite ease-in-out; }
+.skeleton-title { height: 4rem; width: 75%; margin-bottom: 1.5rem; }
+.skeleton-text { height: 5rem; width: 100%; }
+.skeleton-img { width: 100%; height: 60vh; border-radius: 30px; }
+.skeleton-logo { width: 100px; height: 40px; border-radius: 8px; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+/* Reveals */
+.reveal { opacity: 0; transform: translateY(20px); transition: all 1s var(--ease-silky); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* =========================================
+   Responsive
+========================================= */
+@media (max-width: 992px) {
+    .slide { flex-direction: column; text-align: left; gap: 3rem; }
+    .slide-visual { justify-content: flex-start; }
+    .img-wrapper img { height: 40vh; min-height: 300px; }
+    .section-header { text-align: left; }
+}
+
+@media (max-width: 480px) {
+    .logo-text { font-size: 1.8rem; }
+    .air-nav.scrolled .logo-text { transform: translate(0, -50%) scale(0.65); } 
+    .btn { width: 100%; text-align: center; }
+}
